@@ -1,4 +1,3 @@
-
 #include "print.h"
 #include QMK_KEYBOARD_H
 #include "pointing_device.h"
@@ -6,96 +5,85 @@
 #include "split_util.h"
 #include "drivers/sensors/pmw33xx_common.h"
 
-
-
 enum _layers {
-_BASE,
-_FUNC,
-_SYMB,
-_MS
+    _BASE,
+    _FUNC,
+    _SYMB,
+    _MS
 };
 
-
-// Tap Dance definitions
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
     [_BASE] = LAYOUT(
-         // left
-         LT(_SYMB, KC_ENTER),  KC_Z,      KC_A ,        KC_Q,
-         LSFT_T(KC_F2),      KC_X,       KC_S,        KC_W,
-         LGUI_T(KC_DEL),  LT(_MS, KC_C),       KC_D,        KC_E,
-                             KC_V,   LCTL_T(KC_F),        KC_R,
-                             KC_B,       RALT_T(KC_G),         KC_T,
-           // right
-           KC_ESC,             KC_N,           KC_H,           KC_Y,
-           LT(_FUNC, KC_SPC),  KC_M,           LCTL_T(KC_J),           KC_U,
-           LSFT_T(KC_BSPC),            KC_COMMA,       KC_K,           KC_I,
-                               KC_DOT,         KC_L,           KC_O,
-                               KC_SLASH,       KC_SEMICOLON,   KC_P
+        LT(_SYMB, KC_ENT),     KC_Z,       KC_A,         KC_Q,
+        LSFT_T(KC_F2),         KC_X,       KC_S,         KC_W,
+        LGUI_T(KC_DEL),        KC_C,       KC_D,         KC_E,
+                               KC_V,       LT(_MS,KC_F), KC_R,
+                               KC_B,       RALT_T(KC_G), KC_T,
+
+        KC_ESC,                KC_N,       KC_H,         KC_Y,
+        LT(_FUNC, KC_SPC),     KC_M,       LCTL_T(KC_J), KC_U,
+        LSFT_T(KC_BSPC),       KC_COMM,    KC_K,         KC_I,
+                               KC_DOT,     KC_L,         KC_O,
+                               KC_SLSH,    KC_SCLN,      KC_P
     ),
 
-
     [_FUNC] = LAYOUT(
-         // left
-         _______,            KC_MEDIA_NEXT_TRACK, KC_AUDIO_MUTE,      XXXXXXX,
-         _______,            KC_AUDIO_VOL_DOWN,   KC_AUDIO_VOL_UP,    XXXXXXX,
-         _______,            KC_BRIGHTNESS_DOWN,  KC_MEDIA_PLAY_PAUSE,KC_PLUS,
-                             KC_BRIGHTNESS_DOWN,  KC_TAB,             KC_UNDS,
-                             XXXXXXX,             XXXXXXX,            XXXXXXX,
-           // right
-           _______,            XXXXXXX,             KC_LEFT,            QK_BOOT,
-           _______,            KC_NONUS_HASH,       KC_DOWN,            KC_MINUS,
-           _______,            XXXXXXX,             KC_UP,              KC_EQUAL,
-                               XXXXXXX,             KC_RIGHT,           XXXXXXX,
-                               XXXXXXX,             XXXXXXX,            KC_PSCR
+        _______,               KC_MNXT,    KC_MUTE,     XXXXXXX,
+        _______,               KC_VOLD,    KC_VOLU,     XXXXXXX,
+        _______,               KC_BRID,    KC_MPLY,     KC_PLUS,
+                               KC_BRID,    KC_TAB,      KC_UNDS,
+                               XXXXXXX,    XXXXXXX,     XXXXXXX,
+
+        _______,               XXXXXXX,    KC_LEFT,     QK_BOOT,
+        _______,               KC_NUHS,    KC_DOWN,     KC_MINS,
+        _______,               XXXXXXX,    KC_UP,       KC_EQL,
+                               XXXXXXX,    KC_RGHT,     XXXXXXX,
+                               XXXXXXX,    XXXXXXX,     KC_PSCR
     ),
 
     [_SYMB] = LAYOUT(
-        // left
-        _______,            XXXXXXX,             KC_9,               QK_BOOT,
-        _______,            XXXXXXX,             KC_0,               XXXXXXX,
-        _______,            KC_LEFT_BRACKET,     KC_1,               KC_QUOT,
-                            KC_RIGHT_BRACKET,    KC_2,               KC_GRV,
-                             XXXXXXX,             KC_3,               XXXXXXX,
-           // right
-           _______,            XXXXXXX,             KC_4,               XXXXXXX,
-          _______,            KC_HASH,             KC_5,               KC_ASTR,
-          _______,            KC_BACKSLASH,        KC_6,               KC_PIPE,
-                              XXXXXXX,             KC_7,               KC_AMPR,
-                              XXXXXXX,             KC_8,               XXXXXXX
+        _______,               XXXXXXX,    KC_9,        QK_BOOT,
+        _______,               XXXXXXX,    KC_0,        XXXXXXX,
+        _______,               KC_LBRC,    KC_1,        KC_QUOT,
+                               KC_RBRC,    KC_2,        KC_GRV,
+                               XXXXXXX,    KC_3,        XXXXXXX,
+
+        _______,               XXXXXXX,    KC_4,        XXXXXXX,
+        _______,               KC_HASH,    KC_5,        KC_ASTR,
+        _______,               KC_BSLS,    KC_6,        KC_PIPE,
+                               XXXXXXX,    KC_7,        XXXXXXX,
+                               XXXXXXX,    KC_8,        XXXXXXX
     ),
 
-
     [_MS] = LAYOUT(
-        // left
+        _______,               _______,    _______,     _______,
+        _______,               _______,    _______,     _______,
+        _______,               _______,    MS_BTN3,     _______,
+                               _______,    _______,     _______,
+                               _______,    _______,     _______,
 
-        _______,           _______,            _______,           _______,
-        _______,           _______,            _______,           _______,
-        _______,           _______,            _______,           _______,
-                           _______,            _______,           _______,
-                            _______,            _______,           _______,
-           // right
-           _______,            _______, _______            ,            _______,
-          _______,            _______,MS_BTN1              ,           _______,
-          _______,            _______,MS_BTN2,              _______,
-                              _______,             _______,            _______,
-                               _______,             _______,            _______
+        _______,               _______,    _______,     _______,
+        _______,               _______,    _______,     _______,
+        _______,               _______,    MS_BTN1,     _______,
+                               _______,    MS_BTN2,     _______,
+                               _______,    _______,     _______
     )
+
 };
 
-#include "quantum.h"
-
 void keyboard_post_init_user(void) {
-    debug_enable=true;
-    debug_matrix=true;
-    debug_keyboard=true;
+    debug_enable   = true;
+    debug_matrix   = true;
+    debug_keyboard = true;
 }
+
 void pointing_device_init_kb(void) {
     pointing_device_init_user();
 }
 
 void matrix_scan_user(void) {
-    // Disabled during COMBINED test; pointing_device_task_combined_user
-    // handles both sensors directly.
+    // COMBINED mode handles both sensors via pointing_device_task_combined_user.
 }
 
 #define SCROLL_DIVISOR_X 150
@@ -142,4 +130,3 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
 
     return report;
 }
-
