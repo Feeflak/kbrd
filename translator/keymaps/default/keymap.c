@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include "print.h"
 #include QMK_KEYBOARD_H
 #include "pointing_device.h"
@@ -7,9 +8,11 @@
 
 enum _layers {
     _BASE,
+    _FPS,
     _FUNC,
     _SYMB,
     _MS
+
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -27,9 +30,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                KC_DOT,     KC_L,         KC_O,
                                KC_SLSH,    KC_SCLN,      KC_P
     ),
+    [_FPS] = LAYOUT(
+        KC_LSFT,               KC_Z,       KC_G,     _______,
+        KC_LCTL,               KC_X,       KC_A ,        KC_Q ,
+        XXXXXXX,               KC_C,       KC_S ,         KC_W ,
+                               KC_V,       KC_D,         KC_E ,
+                               KC_B,       KC_F,         KC_R ,
+
+        KC_ESC,              KC_N,       KC_H,         KC_T,
+        KC_SPC,                KC_M,       MS_BTN3,      KC_U,
+        TG(_FPS),               KC_COMM,    MS_BTN1,      KC_I,
+                               KC_DOT,     MS_BTN2,      KC_O,
+                               KC_SLSH,    KC_SCLN,      KC_P
+    ),
 
     [_FUNC] = LAYOUT(
-        _______,               KC_MNXT,    KC_MUTE,     XXXXXXX,
+        TG(_FPS),              KC_MNXT,    KC_MUTE,     XXXXXXX,
         _______,               KC_VOLD,    KC_VOLU,     XXXXXXX,
         _______,               KC_BRID,    KC_MPLY,     KC_PLUS,
                                KC_BRID,    KC_TAB,      KC_UNDS,
@@ -105,15 +121,19 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
     report_mouse_t report = {0};
 
     // Sensors only act as mouse/scroll while the mouse layer is active.
-    if (!layer_state_is(_MS)) {
+    if (!layer_state_is(_MS) && !layer_state_is(_FPS)) {
         return report;
     }
 
-    // Right sensor moves the cursor.
-    int16_t move_x = ((int16_t)right_report.x * MOVE_SCALE_NUMERATOR) / MOVE_SCALE_DENOMINATOR;
-    int16_t move_y = ((int16_t)right_report.y * MOVE_SCALE_NUMERATOR) / MOVE_SCALE_DENOMINATOR;
-    report.x = clamp_mouse_axis(move_x);
-    report.y = clamp_mouse_axis(move_y);
+    // // Right sensor moves the cursor.
+    // int16_t move_x = ((int16_t)right_report.x * MOVE_SCALE_NUMERATOR) / MOVE_SCALE_DENOMINATOR;
+    // int16_t move_y = ((int16_t)right_report.y * MOVE_SCALE_NUMERATOR) / MOVE_SCALE_DENOMINATOR;
+    // report.x = clamp_mouse_axis(move_x);
+    // report.y = clamp_mouse_axis(move_y);
+
+    report.x = right_report.x;
+    report.y = right_report.y;
+
 
     // Left sensor scrolls horizontally/vertically.
     // Accumulate fractional movement so slow slides still register.
