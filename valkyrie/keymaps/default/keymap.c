@@ -17,9 +17,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
         // left
         LT(_SYMB, KC_ENTER),  KC_Z,      KC_A ,        KC_Q,
-        LCTL_T(KC_F2),      KC_X,       KC_S,        KC_W,
+        LSFT_T(KC_F2),      KC_X,       KC_S,        KC_W,
         LGUI_T(KC_DEL),   KC_C,       KC_D,        KC_E,
-                            KC_V,   KC_F,        KC_R,
+                            KC_V,   LCTL_T(KC_F),        KC_R,
                             KC_B,       RALT_T(KC_G),        LT(_MS, KC_T),
 
 void keyboard_post_init_user(void) {
